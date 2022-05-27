@@ -9,6 +9,7 @@ import io
 from face_rec import FaceRec
 import face_recognition
 import numpy as np
+import os
 
 
 app = Flask(__name__)
@@ -58,7 +59,7 @@ def markAttendence():
                 elif len(unknownIds)>1:
                     return make_response(jsonify({"error":"More than one faces found. Please try again individually!!"}),400)
                 else:
-                    reqPost = requests.post("https://apis.techdevelopers.live/api/user/update/attendance", json={"id": id,"status":"P"})
+                    reqPost = requests.post("https://apis.techdevelopers.live/api/user/update/attendance", json={"id": unknownIds[0],"status":"P"})
                     if reqPost.status_code == 200:
                         return make_response(jsonify({"message":"Congratulations!! Your attendance has been marked"}),200)
                     else:
@@ -108,4 +109,5 @@ def getEncodings():
 
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
