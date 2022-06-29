@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, make_response
 import requests
 from flask_cors import CORS
 import json
-import cv2
+# import cv2
 from PIL import Image
 import base64
 import io
@@ -41,8 +41,8 @@ def markAttendence():
                 result = data['imageSrc']
                 b = bytes(result,'utf-8')
                 image = b[b.find(b',')+1:]
-                im = Image.open(io.BytesIO(base64.b64decode(image)))
-                img = cv2.cvtColor(np.array(im), cv2.COLOR_BGR2RGB)
+                img = Image.open(io.BytesIO(base64.b64decode(image)))
+#                 img = cv2.cvtColor(np.array(im), cv2.COLOR_BGR2RGB)
 
                 # Creating a face_rec  class object
                 faceRec = FaceRec(img,encodeListKnown,ids)
@@ -86,8 +86,8 @@ def getEncodings():
             result = data['data']
             b = bytes(result,'utf-8')
             image = b[b.find(b',')+1:]
-            im = Image.open(io.BytesIO(base64.b64decode(image)))
-            img = cv2.cvtColor(np.array(im), cv2.COLOR_BGR2RGB)
+            img = Image.open(io.BytesIO(base64.b64decode(image)))
+#             img = cv2.cvtColor(np.array(im), cv2.COLOR_BGR2RGB)
 
             # Getting Encoding from Image
             facesCurrFrame = face_recognition.face_locations(img)
