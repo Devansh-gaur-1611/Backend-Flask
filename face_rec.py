@@ -1,4 +1,4 @@
-import cv2
+# import cv2
 import numpy as np
 import face_recognition
 import os
@@ -19,7 +19,7 @@ class FaceRec:
             return "No face detected"
 
         imgS=cv2.resize(self.unknownImage,(0,0),None,0.25,0.25)
-        imgS=cv2.cvtColor(imgS,cv2.COLOR_BGR2RGB)
+#         imgS=cv2.cvtColor(imgS,cv2.COLOR_BGR2RGB)
 
         attendee = []
         for encodeFace,faceLoc in zip(encodeCurrFrame,facesCurrFrame):
