@@ -22,7 +22,7 @@ def markAttendence():
 
     if data :
         try:
-            r = requests.get("https://apis.techdevelopers.live/api/encodings/"+data['teamName'])
+            r = requests.get("https://apis-attendo.herokuapp.com/api/encodings/"+data['teamName'])
             if(r.status_code==200):
                 jsonObject=r.json()
 
@@ -45,11 +45,12 @@ def markAttendence():
 #                 img = cv2.cvtColor(np.array(im), cv2.COLOR_BGR2RGB)
 
                 # Creating a face_rec  class object
+                img = np.array(img)
                 faceRec = FaceRec(img,encodeListKnown,ids)
 
                 # Getting Ids which are recognized
                 unknownIds = faceRec.check_mark_attendence()
-                
+
                 # Checks for errors and marking Attendence
                 if(unknownIds == "No face detected"):
                     return make_response(jsonify({"error":"No face detected. Please try again"}),400)  
@@ -59,7 +60,7 @@ def markAttendence():
                 elif len(unknownIds)>1:
                     return make_response(jsonify({"error":"More than one faces found. Please try again individually!!"}),400)
                 else:
-                    reqPost = requests.post("https://apis.techdevelopers.live/api/user/update/attendance", json={"id": unknownIds[0],"status":"P"})
+                    reqPost = requests.post("https://apis-attendo.herokuapp.com/api/user/update/attendance", json={"id": unknownIds[0],"status":"P"})
                     if reqPost.status_code == 200:
                         return make_response(jsonify({"message":"Congratulations!! Your attendance has been marked"}),200)
                     else:
@@ -90,6 +91,7 @@ def getEncodings():
 #             img = cv2.cvtColor(np.array(im), cv2.COLOR_BGR2RGB)
 
             # Getting Encoding from Image
+            img = np.array(img)
             facesCurrFrame = face_recognition.face_locations(img)
             encodeCurrFrame = face_recognition.face_encodings(img,facesCurrFrame)
 

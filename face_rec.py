@@ -18,7 +18,7 @@ class FaceRec:
         if(len(facesCurrFrame)==0):
             return "No face detected"
 
-        imgS=cv2.resize(self.unknownImage,(0,0),None,0.25,0.25)
+        # imgS=cv2.resize(self.unknownImage,(0,0),None,0.25,0.25)
 #         imgS=cv2.cvtColor(imgS,cv2.COLOR_BGR2RGB)
 
         attendee = []
